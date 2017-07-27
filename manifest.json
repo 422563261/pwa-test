@@ -1,15 +1,23 @@
 {
+  "dir": "ltr",
+  "lang": "en",
+  "scope": "/",
   "name": "Minimal PWA",
   "short_name": "PWA Demo",
+  "description": "PWA tanruiqi",
+  "orientation": "any",
   "display": "standalone",
   "start_url": "/",
   "theme_color": "#313131",
   "background_color": "#313131",
+  "related_applications": [],
+  "prefer_related_applications": false,
   "icons": [
     {
-      "src": "e.png",
-      "sizes": "512x512",
-      "type": "image/png"
+        "src": "e.png",
+        "type": "image/png",
+        "density": 1,
+        "sizes": {}
     }
   ]
 }
