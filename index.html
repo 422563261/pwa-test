@@ -19,24 +19,33 @@
     <span id="network-status" class="">Good</span>
   </div>
   <script type="text/javascript">
-    if (navigator.serviceWorker != null) {
-      window.addEventListener('load', function () {
-        Notification.requestPermission();
-        navigator.serviceWorker.register('sw.js')
-        .then(function(registration) {
-          console.log('Registered events at scope: ', registration.scope);
-        }, function (err) {
-          console.log('ServiceWorker registration failed:', err);
-        });
-      })
-    }
-
-    fetch('./data.json')
-
-    var statusEl = document.querySelector('#network-status')
+  window.onload = function () {
+    const statusEl = document.querySelector('#network-status')
     if (!navigator.onLine) {
       statusEl.classList = ['is-offline']
       statusEl.innerText = 'Offline'
+    }  
+
+    const isSupport = () => 'serviceWorker' in navigator;
+
+    const sendMessageToSW = msg => navigator.serviceWorker.controller && navigator.serviceWorker.controller.postMessage(msg);
+
+    if (isSupport()) {
+      navigator.serviceWorker.register('sw.js')
+        .then(registration => {
+          console.log('load server success!');
+        })
+        .catch(() => {
+          console.log('ServiceWorker registration failed:');
+        })
+        .then(() => {
+          sendMessageToSW('Hello, service worker.');
+        })
+        .catch(() => console.error('Send message error. '));
+    // fetch('./data.json');
+    } else {
+      console.log('not support serviceWorker!');
     }
+  }  
   </script>
 </body>
